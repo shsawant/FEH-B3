@@ -1,0 +1,18 @@
+void PerformanceTestWithTime(float degrees)
+{
+
+    StartProgram(CdS_cell);
+    MoveTime(degrees, IDEALPOWER, 4481);
+    MoveTime(0, IDEALPOWER, 500);
+    MoveTime(270, IDEALPOWER, 2500);
+    MoveTime(0, IDEALPOWER, 3472);
+    MoveTime(90, IDEALPOWER, 800);
+    MoveTime(270, IDEALPOWER, 800);
+    ChangeOrientation(1022);
+    MoveTime(315, 75, 5000);
+
+    front.SetPercent(0);
+    right.SetPercent(0);
+    back.SetPercent(0);
+    left.SetPercent(0);
+}
