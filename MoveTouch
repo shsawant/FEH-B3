@@ -1,0 +1,20 @@
+void MoveTouch(float degrees, float power)
+{
+    float x,y;
+    float radians = degrees * (PI/180.0);
+    LCD.Clear();
+    float start = TimeNow();
+    while (!LCD.Touch(&x,&y))
+    {
+        front.SetPercent(power*cos(radians));
+        right.SetPercent(power*-sin(radians));
+        back.SetPercent(.97*power*-cos(radians));
+        left.SetPercent(power*sin(radians));
+    }
+    float finish = TimeNow() - start;
+    front.SetPercent(0);
+    right.SetPercent(0);
+    back.SetPercent(0);
+    left.SetPercent(0);
+    LCD.WriteAt(finish, 1, 1);
+}
