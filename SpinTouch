@@ -1,0 +1,19 @@
+void SpinTouch(float power)
+{
+    float x,y;
+    float start = TimeNow();
+    LCD.Clear();
+    while (!LCD.Touch(&x,&y))
+    {
+        front.SetPercent(power);
+        right.SetPercent(power);
+        back.SetPercent(power);
+        left.SetPercent(power);
+    }
+    float finish = TimeNow() - start;
+    front.SetPercent(0);
+    right.SetPercent(0);
+    back.SetPercent(0);
+    left.SetPercent(0);
+    LCD.WriteAt(finish, 1, 1);
+}
