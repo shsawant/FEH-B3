@@ -1,0 +1,9 @@
+void CdS_Test()
+{
+    float a,b;
+while (!LCD.Touch(&a,&b))
+{
+    LCD.WriteLine(CdS_cell.Value());
+    Sleep(100);
+}
+}
