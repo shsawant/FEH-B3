@@ -1,0 +1,42 @@
+Main Method
+
+Call control panel method
+
+Call car jack method
+
+Call pick up wrench method
+
+Call deposit wrench method
+
+Call fuel crank method
+
+Call return to start method
+
+
+
+
+MoveTime Method
+takes parameters of direction in degrees, power, and time
+
+convert degrees to radians
+
+Set front motor to -cos(radians)*power
+Set right motor to -sin(radians)*power
+Set back motor to cos(radians)*power
+Set left motor to -sin(radians)*power
+
+Control Panel Method
+Move 45 degrees at 50 power for 2 seconds
+if (CdS value > 1) light is blue
+{
+  move diagonally to touch blue button
+  back up from blue button
+  move diagonally to touch white button for 5 seconds
+ }
+ else (light is red)
+ {
+ move diagonally to touch red button
+ back up from blue button
+ move diagonally to touch white button
+ }
+  
