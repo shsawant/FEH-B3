@@ -1,0 +1,20 @@
+void ChooseButton()
+{
+    LCD.Clear();
+    if(CdS_cell.Value() < 1)
+    {
+        LCD.WriteAt("RED",100,1);
+
+        MoveTime(32,25,1500);
+        MoveTime(90,100,100);
+
+    }
+    else
+    {
+        LCD.WriteAt("BLUE",100,1);
+
+        MoveTime(155,25,1800);
+        MoveTime(90,100,100);
+
+    }
+}
