@@ -2,12 +2,12 @@ void PerformanceTest1(float degrees)
 {
 
     StartProgram(CdS_cell);
-    MoveSwitch(120,50, FrontSwitch);
+    MoveSwitch(30,50, FrontSwitch);
     MoveTime(0, IDEALPOWER, 500);
-    MoveTime(270, IDEALPOWER, 2500);
+    MoveTime(90, IDEALPOWER, 2500);
     MoveSwitch(0, 80, LeftSwitch);
-    MoveSwitch(90,50, FrontSwitch);
-    MoveTime(270, IDEALPOWER, 800);
+    MoveSwitch(270,50, FrontSwitch);
+    MoveTime(90, IDEALPOWER, 800);
     ChangeOrientation(1022);
-    MoveTime(315, 75, 5000);
+    MoveTime(45, 75, 5000);
 }
