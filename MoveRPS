@@ -1,17 +1,39 @@
-void MoveRPS(float power, float XCoordinate, float YCoordinate)    
+void MoveRPS(float power, float FinalX, float FinalY)    
     RPS.InitializeTouchMenu();
     
     CurrentX = RPS.X();
     CurrentY = RPS.Y();
     
-    float radians = atan((XCoordinate - CurrentX)/(YCoordinate - CurrentY));
+    //find what quadrant angle is in
+    
+    if ((FinalX - StartX) > 0) && (FinalY - StartY) > 0)) //quadrant 1
+    {
+        float offset = 0;
+    }
+    else if ((FinalX - StartX) < 0) && (FinalY - StartY) > 0) //quadrant 2
+    {
+        float offset = PI;
+    }
+    else if ((FinalX - StartX) < 0) && (FinalY - StartY) < 0) //quadrant 3
+    {
+        float offset = PI;
+    }
+    else 
+    {
+        float offset = 0;
+    }
+    
+    
+    
+    
+    float radians = atan((FinalX - StartX)/(FinalY - StartY)) + offset;
     
     front.SetPercent(power*-cos(radians));
     right.SetPercent(power*-sin(radians));
     back.SetPercent(power*cos(radians));
     left.SetPercent(power*sin(radians));
     
-    while((RPS.X() != XCoordinate) && (RPS.Y() != YCoordinate)){}
+    while((RPS.X() != FinalX) && (RPS.Y() != FinalY)){}
     
     front.SetPercent(0);
     right.SetPercent(0);
