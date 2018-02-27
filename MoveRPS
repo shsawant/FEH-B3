@@ -6,19 +6,12 @@ void MoveRPS(float power, float FinalX, float FinalY)
     
     //find what quadrant angle is in
     
-    if ((FinalX - StartX) > 0) && (FinalY - StartY) > 0)) //quadrant 1
-    {
-        float offset = 0;
-    }
-    else if ((FinalX - StartX) < 0) && (FinalY - StartY) > 0) //quadrant 2
+   
+    if (((FinalX - StartX) < 0) && (FinalY - StartY) > 0))||((FinalX - StartX) < 0) && (FinalY - StartY) < 0))) //quadrant 2 or 3
     {
         float offset = PI;
     }
-    else if ((FinalX - StartX) < 0) && (FinalY - StartY) < 0) //quadrant 3
-    {
-        float offset = PI;
-    }
-    else 
+    else //Quadrant 1 or 4
     {
         float offset = 0;
     }
