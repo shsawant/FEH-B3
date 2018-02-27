@@ -1,0 +1,23 @@
+void MoveRPS(float power, float XCoordinate, float YCoordinate)    
+    RPS.InitializeTouchMenu();
+    
+    CurrentX = RPS.X();
+    CurrentY = RPS.Y();
+    
+    float radians = atan((XCoordinate - CurrentX)/(YCoordinate - CurrentY));
+    
+    front.SetPercent(power*-cos(radians));
+    right.SetPercent(power*-sin(radians));
+    back.SetPercent(power*cos(radians));
+    left.SetPercent(power*sin(radians));
+    
+    while((RPS.X() != XCoordinate) && (RPS.Y() != YCoordinate)){}
+    
+    front.SetPercent(0);
+    right.SetPercent(0);
+    back.SetPercent(0);
+    left.SetPercent(0);
+}
+    
+    
+   
