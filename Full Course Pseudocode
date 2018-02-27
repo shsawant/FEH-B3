@@ -25,17 +25,21 @@ convert degrees to radians
 Set front motor to -cos(radians)*power
 Set right motor to -sin(radians)*power
 Set back motor to cos(radians)*power
-Set left motor to -sin(radians)*power
+Set left motor to sin(radians)*power
+
+Sleep for time milliseconds
+
+Set all motors to zero
 
 Control Panel Method
 Move 45 degrees at 50 power for 2 seconds
 if (CdS value > 1) light is blue
-{
+  {
   move diagonally to touch blue button
   back up from blue button
   move diagonally to touch white button for 5 seconds
- }
- else (light is red)
+  }
+else light is red
  {
  move diagonally to touch red button
  back up from blue button
