@@ -1,0 +1,17 @@
+ChangeOrientationRPS (float power, float final_heading)
+{
+
+RPS.InitializeTouchMenu();
+
+
+front.SetPercent(power);
+right.SetPercent(power);
+back.SetPercent(power);
+left.SetPercent(power);
+
+while(RPS.Heading() != final_heading){}
+
+front.SetPercent(0);
+right.SetPercent(0);
+back.SetPercent(0);
+left.SetPercent(0);
