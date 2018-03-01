@@ -1,0 +1,5 @@
+void BackToStart()
+{
+    MoveTime(215,50,2461);
+    MoveTime(270,100,2000);
+}
