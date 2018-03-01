@@ -26,7 +26,7 @@ void MoveRPS(float power, float FinalX, float FinalY)
     back.SetPercent(power*cos(radians));
     left.SetPercent(power*sin(radians));
     
-    while((RPS.X() != FinalX) && (RPS.Y() != FinalY)){}
+    while((abs(RPS.X() - FinalX) > 1) && (abs(RPS.Y() - FinalY) > 1)){}
     
     front.SetPercent(0);
     right.SetPercent(0);
