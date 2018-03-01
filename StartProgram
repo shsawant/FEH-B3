@@ -1,4 +1,4 @@
 void StartProgram(AnalogInputPin CdS)
 {
-    while(CdS.Value() > 1){}
+    while(CdS.Value() > 2){}
 }
