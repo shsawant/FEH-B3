@@ -1,0 +1,8 @@
+void PerformanceTest2()
+{
+    StartProgram(CdS_cell);
+    MoveTime(135, IDEALPOWER, 2000);
+    ChooseButton();
+    BackToStart();
+
+}
