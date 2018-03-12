@@ -3,12 +3,12 @@
 #include <FEHUtility.h>
 #include <FEHMotor.h>
 #include <math.h>
+#include <FEHServo.h>
+#include <FEHRPS.h>
+#include <FEHAccel.h>
 
 #define PI 3.14159265
-#define MOVEPOWER 50
-#define TURNPOWER 25
-#define HILLPOWER 75
-
+//declare motors and sensors
 
 FEHMotor front(FEHMotor::Motor0, 7.2);
 FEHMotor right(FEHMotor::Motor1, 7.2);
@@ -20,3 +20,4 @@ DigitalInputPin LeftSwitch(FEHIO::P2_0);
 
 AnalogInputPin CdS_cell(FEHIO::P0_0);
 
+FEHServo arm_servo(FEHServo::Servo0);
