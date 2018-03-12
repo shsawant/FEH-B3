@@ -1,1 +1,8 @@
-
+void WhiteButton()
+{
+    MoveTime(138, IDEALPOWER, 2000);
+    MoveRPS(25,26.3, 21.7);
+    CheckHeading(0);
+    MoveTime(90,25,1400);
+    MoveDead(90, 25);
+}
