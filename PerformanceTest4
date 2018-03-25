@@ -1,0 +1,61 @@
+void PerformanceTest4Final()
+{
+    RPS.InitializeTouchMenu();
+
+    SD.OpenLog();
+    StartProgram(CdS_cell);
+    ServoSetup();
+    WhiteButton();
+    MoveTime(270, 50, 500);
+    MoveTime(180,50, 500);
+    ChangeOrientation(1000, -1.0);
+    CheckHeading(315);
+    MoveTime(315, 75, 3800);
+    ChangeOrientation(1000, 1.0);
+    CheckHeading(0);
+    MoveRPS(25, 28.5, 46.4);
+    ChangeOrientation(2500, -1.0);
+    CheckHeading(270);
+
+
+
+    if(RPS.FuelType() == 1)
+    {
+        LCD.WriteAt("Octane", 1,1);
+
+        MoveTime(45, 50, 3500);
+        ChangeOrientation(1000, -1.0);
+        CheckHeading(225);
+        MoveTime(90, 25, 100);
+        arm_servo.SetDegree(90);
+        MoveTime(0, 25, 3500);
+        Sleep(100);
+        MoveTime(270, 25, 2800);
+
+
+
+
+    }
+    else if(RPS.FuelType() == 2)
+    {
+        LCD.WriteAt("Nitro", 1,1);
+
+        MoveTime(45, 50, 1700);
+        ChangeOrientation(1000, -1.0);
+        CheckHeading(225);
+        arm_servo.SetDegree(90);
+        MoveTime(0, 25, 3600);
+        Sleep(100);
+        MoveTime(90, 25, 3200);
+
+
+    }
+    CheckHeading(225);
+    MoveTime(180, 25, 4000);
+    SetHeading(180);
+    arm_servo.SetDegree(15);
+    MoveTouch(315, 50);
+
+    SD.CloseLog();
+
+}
