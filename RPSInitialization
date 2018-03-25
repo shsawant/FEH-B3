@@ -1,0 +1,44 @@
+must be in main method
+
+{
+  
+  float x, y;
+  LCD.WriteRC("X Position:",2,0);
+  LCD.WriteRC("Y Position:",3,0);
+  
+  while (!LCD.Touch(&x, &y)
+  {
+    LCD.WriteRC("White Button");
+    LCD.WriteRC(RPS.X(),2,12); //update the x coordinate
+    LCD.WriteRC(RPS.Y(),3,12); //update the y coordinate
+  }
+  float WhiteButtonX = RPS.X();
+  float WhiteButtonY = RPS.Y();
+  
+  while (!LCD.Touch(&x, &y)
+  {
+    LCD.WriteRC("Before Car Jack");
+    LCD.WriteRC(RPS.X(),2,12); //update the x coordinate
+    LCD.WriteRC(RPS.Y(),3,12); //update the y coordinate
+  }
+  float BeforeCarJackX = RPS.X();
+  float BeforeCarJackY = RPS.Y();
+  
+  while (!LCD.Touch(&x, &y)
+  {
+    LCD.WriteRC("Wrench");
+    LCD.WriteRC(RPS.X(),2,12); //update the x coordinate
+    LCD.WriteRC(RPS.Y(),3,12); //update the y coordinate
+  }
+  float WrenchX = RPS.X();
+  float WrenchY = RPS.Y();
+  
+  while (!LCD.Touch(&x, &y)
+  {
+    LCD.WriteRC("Before Garage");
+    LCD.WriteRC(RPS.X(),2,12); //update the x coordinate
+    LCD.WriteRC(RPS.Y(),3,12); //update the y coordinate
+  }
+  float BeforeGarageX = RPS.X();
+  float BeforeGarageY = RPS.Y();
+  
