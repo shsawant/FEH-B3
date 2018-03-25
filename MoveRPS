@@ -1,41 +1,59 @@
-void MoveRPS(float power, float FinalX, float FinalY)    
-    RPS.InitializeTouchMenu();
-    
-    CurrentX = RPS.X();
-    CurrentY = RPS.Y();
-    
+void MoveRPSVersion2(float power, float FinalX, float FinalY)
+{
+    float offset = 0;
+
+    float StartX = RPS.X();
+    float StartY = RPS.Y();
+
     //find what quadrant angle is in
-    
-   
-    if (((FinalX - StartX) < 0) && (FinalY - StartY) > 0))||((FinalX - StartX) < 0) && (FinalY - StartY) < 0))) //quadrant 2 or 3
+    LCD.Clear();
+
+
+    if ((FinalX < StartX) && (FinalY > StartY))
     {
-        float offset = PI;
+        offset = 0;
+        LCD.WriteAt("Quadrant 2", 1, 1);
     }
-    else //Quadrant 1 or 4
+    else if ((FinalX < StartX) && (FinalY < StartY))
     {
-        float offset = 0;
+        offset = 0;
+        LCD.WriteAt("Quadrant 3",1,1);
     }
-    
-    
-    
-    
+    else if ((FinalX > StartX) && (FinalY > StartY))
+    {
+        offset = PI;
+        LCD.WriteAt("Quadrant 1",1,1);
+    }
+    else
+    {
+        offset = PI;
+        LCD.WriteAt("Quadrant 4",1,1);
+    }
+
+
+
     float radians = atan((FinalX - StartX)/(FinalY - StartY)) + offset;
-    
-    front.SetPercent(power*-cos(radians));
-    right.SetPercent(power*-sin(radians));
-    back.SetPercent(power*cos(radians));
-    left.SetPercent(power*sin(radians));
-    
-    if(!((abs(RPS.X() - FinalX) > 1) && (abs(RPS.Y() - FinalY) > 1)))
-    {
-        MoveRPS(power, FinalX, FinalY);
+    float degrees = radians*180/PI;
+    LCD.WriteAt(degrees, 1, 50);
+
+
+    Sleep(100);
+
+
+    float distance = pow(pow(FinalX-StartX , 2) + pow(FinalY-StartY, 2), .5);
+    MoveTimeFloat(degrees - RPS.Heading(), power, distance/10);
+    LCD.WriteAt(distance, 1, 100);
+
+
+
+
+
+
+
+    while((abs(RPS.X() - FinalX) > 1) || (abs(RPS.Y() - FinalY) > 1)){
+        MoveRPSVersion2(power, FinalX,FinalY);
+
     }
-    
-    front.SetPercent(0);
-    right.SetPercent(0);
-    back.SetPercent(0);
-    left.SetPercent(0);
+
+
 }
-    
-    
-   
