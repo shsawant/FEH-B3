@@ -1,0 +1,14 @@
+void RPSY(float Y)
+{
+    while(abs(RPS.Y()-Y) > 0.1)
+    {
+    if(RPS.Y() > Y)
+    {
+        MoveTime(90, 25, (RPS.Y()-Y)/10);
+    }
+    else if(RPS.Y() < Y)
+    {
+        MoveTime(270, 25, (RPS.Y()-Y)/10);
+    }
+    }
+}
