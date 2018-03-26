@@ -1,0 +1,22 @@
+void RPSTest()
+{
+
+    LCD.Clear();
+    //Write initial screen info
+   LCD.WriteRC("RPS Test Program",0,0);
+   LCD.WriteRC("X Position:",2,0);
+   LCD.WriteRC("Y Position:",3,0);
+   LCD.WriteRC("   Heading:",4,0);
+
+   LCD.WriteRC(" Fuel Type:",6,0);
+
+    while( true )
+    {
+        LCD.WriteRC(RPS.X(),2,12); //update the x coordinate
+        LCD.WriteRC(RPS.Y(),3,12); //update the y coordinate
+        LCD.WriteRC(RPS.Heading(),4,12); //update the heading
+        LCD.WriteRC(RPS.FuelType(),6,12);
+
+        Sleep(10); //wait for a 10ms to avoid updating the screen too quickly
+    }
+}
