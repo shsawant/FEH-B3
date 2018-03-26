@@ -1,0 +1,37 @@
+void PerformanceTest4Version1()
+{
+    SD.OpenLog();
+    RPS.InitializeTouchMenu();
+    ServoSetup();
+    StartProgram(CdS_cell);
+    WhiteButton(26.3, 21.7);
+    MoveTime(270,50, 500);
+    CheckHeading(0);
+    MoveTime(0, 50, 2367);
+    CheckHeading(0);
+    MoveTime(90,25,2000);
+    //RPSY(16.099);
+    arm_servo.SetDegree(178);
+    CheckHeading(0);
+    MoveTime(0, 25, 1800);
+    MoveTime(270, 25, 300);
+    Sleep(500);
+    arm_servo.SetDegree(90);
+    MoveTime(180, 25, 1000);
+    MoveTime(290, 50, 1900);
+    ChangeOrientation(1000, -1.0);
+    CheckHeading(315);
+    MoveTime(45, 50, 600);
+    MoveTime(315, 100, 3200);
+    CheckHeading(315);
+    MoveTime(270, 50, 2600);
+    CheckHeading(315);
+    Sleep(1000);
+    MoveTime(180, 25, 3045);
+    arm_servo.SetDegree(90);
+    ChangeOrientation(2000, -1.0);
+    CheckHeading(225);
+    MoveTouch(0,25);
+    MoveTime(90, 25, 2722);
+    SD.CloseLog();
+}
