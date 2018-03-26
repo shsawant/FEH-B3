@@ -1,0 +1,65 @@
+void SetHeading(float degrees)
+{
+    while (abs(RPS.Heading() - degrees) > 1.0)
+    {
+
+
+        LCD.Clear();
+        if (RPS.Heading() == -2.00)
+        {
+            MoveTime(180, 25, 20);
+        }
+
+
+
+        else if((RPS.Heading() > degrees) && ((RPS.Heading() - degrees) < 180))
+        {
+            float difference = abs(RPS.Heading() - degrees);
+            float turnTime = difference * 11;
+
+            ChangeOrientation(turnTime, -1.0);
+            LCD.WriteAt(RPS.Heading(),1,1);
+            LCD.WriteAt(degrees, 1, 50);
+            LCD.WriteAt(turnTime, 1, 100);
+
+
+        }
+
+        else if ((RPS.Heading() > degrees) && ((RPS.Heading() - degrees) > 180))
+        {
+            float difference = abs(RPS.Heading() - degrees);
+            float turnTime = ((360 -difference) * 11);
+
+
+            ChangeOrientation(turnTime, 1.0);
+            LCD.WriteAt(RPS.Heading(),1,1);
+            LCD.WriteAt(degrees, 1, 50);
+            LCD.WriteAt(turnTime, 1, 100);
+
+
+        }
+        else if ((RPS.Heading() < degrees) && ((RPS.Heading() - degrees) < 180) )
+        {
+            float difference = abs(RPS.Heading() - degrees);
+            float turnTime = (difference * 11);
+
+            ChangeOrientation(turnTime, -1.0);
+            LCD.WriteAt(RPS.Heading(),1,1);
+            LCD.WriteAt(degrees, 1, 50);
+            LCD.WriteAt(turnTime, 1, 100);
+
+        }
+        else if ((RPS.Heading() < degrees) && (((RPS.Heading() - degrees) > 180)))
+        {
+            float difference = abs(RPS.Heading() - degrees);
+            float turnTime = ((360 - difference) * 11);
+
+            ChangeOrientation(turnTime, 1.0);
+            LCD.WriteAt(RPS.Heading(),1,1);
+            LCD.WriteAt(degrees, 1, 50);
+            LCD.WriteAt(turnTime, 1, 100);
+
+        }
+        Sleep(20);
+    }
+}
