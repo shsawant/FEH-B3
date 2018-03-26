@@ -1,0 +1,14 @@
+void MoveDead(float degrees, float power)
+{
+    float radians = degrees * (PI/180.0);
+    front.SetPercent(power*-cos(radians));
+    right.SetPercent(power*-sin(radians));
+    back.SetPercent(power*cos(radians));
+    left.SetPercent(power*sin(radians));
+    while(RPS.IsDeadzoneActive() != 2){}
+    front.SetPercent(0);
+    right.SetPercent(0);
+    back.SetPercent(0);
+    left.SetPercent(0);
+
+}
