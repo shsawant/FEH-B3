@@ -1,9 +1,9 @@
-void ChangeOrientation(int time)
+void ChangeOrientation(int time, float direction) //direction is 1.0 for counterclockwise, -1.0 for clockwise
 {
-    front.SetPercent(SPINPOWER);
-    right.SetPercent(SPINPOWER);
-    back.SetPercent(SPINPOWER);
-    left.SetPercent(SPINPOWER);
+    front.SetPercent(direction * IDEALPOWER/2);
+    right.SetPercent(direction * IDEALPOWER/2);
+    back.SetPercent(direction * IDEALPOWER/2);
+    left.SetPercent(direction * IDEALPOWER/2);
     Sleep(time);
     front.SetPercent(0);
     right.SetPercent(0);
