@@ -1,16 +1,19 @@
 void ChooseButton()
 {
+    MoveTime(270, 25, 250);
+    CheckHeading(0);
     LCD.Clear();
-    Sleep(100);
+    Sleep(50);
     if(CdS_cell.Value() < 1.5)
     {
         LCD.WriteAt("RED",100,1);
 
-        MoveTime(0,50, 324);
-        MoveTime(90,100,250);
+        MoveTime(0, 25,1000);
+        MoveTime(90,40,500);
         Sleep(100);
-        MoveTime(270,50,250);
-        MoveTime(0,50, 2721);
+        MoveTime(270, 40, 500);
+        CheckHeading(0);
+        MoveTime(0, 75, 802);
 
 
     }
@@ -18,11 +21,15 @@ void ChooseButton()
     {
         LCD.WriteAt("BLUE",100,1);
 
-        MoveTime(180,50,700);
-        MoveTime(90,100,250);
+        MoveTime(180,25,1000);
+        MoveTime(90,40,500);
         Sleep(100);
-        MoveTime(270,50,250);
-        MoveTime(0,50, 3655);
+        MoveTime(270, 40, 500);
+        CheckHeading(0);
+        MoveTime(0, 75, 1389);
+
+
+
 
 
 
