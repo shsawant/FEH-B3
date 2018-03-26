@@ -1,9 +1,9 @@
 void MoveSwitch(float degrees, float power, DigitalInputPin Switch)
 {
     float radians = degrees * (PI/180.0);
-    front.SetPercent(power*cos(radians));
+    front.SetPercent(power*-cos(radians));
     right.SetPercent(power*-sin(radians));
-    back.SetPercent(power*-cos(radians));
+    back.SetPercent(power*cos(radians));
     left.SetPercent(power*sin(radians));
     while(Switch.Value()){};
     front.SetPercent(0);
