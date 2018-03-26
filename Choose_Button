@@ -1,20 +1,31 @@
 void ChooseButton()
 {
     LCD.Clear();
-    if(CdS_cell.Value() < 1)
+    Sleep(100);
+    if(CdS_cell.Value() < 1.5)
     {
         LCD.WriteAt("RED",100,1);
 
-        MoveTime(32,25,1500);
-        MoveTime(90,100,100);
+        MoveTime(0,50, 324);
+        MoveTime(90,100,250);
+        Sleep(100);
+        MoveTime(270,50,250);
+        MoveTime(0,50, 2721);
+
 
     }
     else
     {
         LCD.WriteAt("BLUE",100,1);
 
-        MoveTime(155,25,1800);
-        MoveTime(90,100,100);
+        MoveTime(180,50,700);
+        MoveTime(90,100,250);
+        Sleep(100);
+        MoveTime(270,50,250);
+        MoveTime(0,50, 3655);
+
+
 
     }
+
 }
