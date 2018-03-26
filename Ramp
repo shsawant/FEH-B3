@@ -1,0 +1,10 @@
+void Ramp(float power, DigitalInputPin FrontSwitch, DigitalInputPin RightSwitch)
+{
+    MoveTime(270, IDEALPOWER, 100);
+    ChangeOrientation(100, 1.0);
+    MoveSwitch(90, power, FrontSwitch);
+    MoveSwitch(0, power, RightSwitch);
+    MoveTime(180, power, 5000);
+
+
+}
