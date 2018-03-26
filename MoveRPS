@@ -1,4 +1,4 @@
-void MoveRPSVersion2(float power, float FinalX, float FinalY)
+void MoveRPS(float power, float FinalX, float FinalY)
 {
     float offset = 0;
 
@@ -8,8 +8,11 @@ void MoveRPSVersion2(float power, float FinalX, float FinalY)
     //find what quadrant angle is in
     LCD.Clear();
 
-
-    if ((FinalX < StartX) && (FinalY > StartY))
+    if (StartX < 0 || StartY < 0)
+    {
+        MoveTime(180, 20, 20);
+    }
+    else if ((FinalX < StartX) && (FinalY > StartY))
     {
         offset = 0;
         LCD.WriteAt("Quadrant 2", 1, 1);
@@ -41,8 +44,12 @@ void MoveRPSVersion2(float power, float FinalX, float FinalY)
 
 
     float distance = pow(pow(FinalX-StartX , 2) + pow(FinalY-StartY, 2), .5);
-    MoveTimeFloat(degrees - RPS.Heading(), power, distance/10);
-    LCD.WriteAt(distance, 1, 100);
+    if (distance < 10)
+    {
+        MoveTimeFloat(degrees - RPS.Heading(), power, distance/20);
+        LCD.WriteAt(distance, 1, 100);
+    }
+
 
 
 
@@ -51,7 +58,7 @@ void MoveRPSVersion2(float power, float FinalX, float FinalY)
 
 
     while((abs(RPS.X() - FinalX) > 1) || (abs(RPS.Y() - FinalY) > 1)){
-        MoveRPSVersion2(power, FinalX,FinalY);
+        MoveRPS(power, FinalX,FinalY);
 
     }
 
