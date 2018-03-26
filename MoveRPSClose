@@ -1,0 +1,118 @@
+void MoveRPSClose(float power, float FinalX, float FinalY)
+{
+    float offset = 0;
+
+    float StartX = RPS.X();
+    float StartY = RPS.Y();
+
+    //find what quadrant angle is in
+    LCD.Clear();
+
+    if (RPS.X() > 0)
+    {
+        MoveTime(180, 20, 20);
+    }
+    else if ((FinalX < StartX) && (FinalY > StartY))
+    {
+        offset = 0;
+        LCD.WriteAt("Quadrant 2", 1, 1);
+    }
+    else if ((FinalX < StartX) && (FinalY < StartY))
+    {
+        offset = 0;
+        LCD.WriteAt("Quadrant 3",1,1);
+    }
+    else if ((FinalX > StartX) && (FinalY > StartY))
+    {
+        offset = PI;
+        LCD.WriteAt("Quadrant 1",1,1);
+    }
+    else
+    {
+        offset = PI;
+        LCD.WriteAt("Quadrant 4",1,1);
+    }
+
+
+
+    float radians = atan((FinalX - StartX)/(FinalY - StartY)) + offset;
+    float degrees = radians*180/PI;
+    LCD.WriteAt(degrees, 1, 50);
+
+
+    Sleep(100);
+
+
+    float distance = pow(pow(FinalX-StartX , 2) + pow(FinalY-StartY, 2), .5);
+    MoveTimeFloat(degrees - RPS.Heading(), power, distance/10);
+    LCD.WriteAt(distance, 1, 100);
+
+
+
+
+
+
+
+    while((abs(RPS.X() - FinalX) > 0.5) || (abs(RPS.Y() - FinalY) > 0.5)){
+        MoveRPSClose(power, FinalX,FinalY);
+
+    }
+
+
+}
+
+void ChangeOrientation(int time, float direction) //direction is 1.0 for counterclockwise, -1.0 for clockwise
+{
+    front.SetPercent(direction * IDEALPOWER/2);
+    right.SetPercent(direction * IDEALPOWER/2);
+    back.SetPercent(direction * IDEALPOWER/2);
+    left.SetPercent(direction * IDEALPOWER/2);
+    Sleep(time);
+    front.SetPercent(0);
+    right.SetPercent(0);
+    back.SetPercent(0);
+    left.SetPercent(0);
+}
+
+void CheckHeading(float degrees)
+{
+    while (abs(RPS.Heading() - degrees) > 1.0)
+    {
+        LCD.Clear();
+        if (RPS.Heading() == -2.00)
+        {
+            MoveTime(180, 25, 20);
+        }
+        else if((RPS.Heading() > degrees) && ((RPS.Heading() - degrees) < 180))
+        {
+            ChangeOrientation(20, -1.0);
+            LCD.WriteAt(RPS.Heading(),1,1);
+            LCD.WriteAt(degrees, 1, 50);
+
+            Sleep(100);
+        }
+
+        else if ((RPS.Heading() > degrees) && ((RPS.Heading() - degrees) > 180))
+        {
+            ChangeOrientation(20, 1.0);
+            LCD.WriteAt(RPS.Heading(),1,1);
+            LCD.WriteAt(degrees, 1, 50);
+            Sleep(100);
+        }
+        else if ((RPS.Heading() < degrees) && ((RPS.Heading() - degrees) < 180) )
+        {
+            ChangeOrientation(20, 1.0);
+            LCD.WriteAt(RPS.Heading(),1,1);
+            LCD.WriteAt(degrees, 1, 50);
+            Sleep(100);
+        }
+        else if ((RPS.Heading() < degrees) && (((RPS.Heading() - degrees) < 180)))
+        {
+            ChangeOrientation(20, -1.0);
+            LCD.WriteAt(RPS.Heading(),1,1);
+            LCD.WriteAt(degrees, 1, 50);
+            Sleep(100);
+        }
+
+    }
+}
