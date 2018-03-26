@@ -1,0 +1,5 @@
+void ServoSetup()
+{
+    arm_servo.SetMin(500);
+    arm_servo.SetMax(2450);
+}
