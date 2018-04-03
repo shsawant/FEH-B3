@@ -1,0 +1,198 @@
+SD.OpenLog();
+
+
+   RPS.InitializeTouchMenu();
+
+   float a, b, c, d ,e, f, g, h, i, k, l, m, n, o, p, q;
+     LCD.WriteRC("X Position:",2,0);
+     LCD.WriteRC("Y Position:",3,0);
+
+     while (!LCD.Touch(&a, &b))
+     {
+       LCD.WriteRC("White Button             ", 0, 0);
+       LCD.WriteRC(RPS.X(),2,12); //update the x coordinate
+       LCD.WriteRC(RPS.Y(),3,12); //update the y coordinate
+     }
+     float WhiteButtonX = RPS.X();
+     float WhiteButtonY = RPS.Y();
+     SD.Printf("%f %f\n", WhiteButtonX, WhiteButtonY);
+     Sleep(1500);
+
+     while (!LCD.Touch(&c, &d))
+     {
+       LCD.WriteRC("Before Car Jack", 0, 0);
+       LCD.WriteRC(RPS.X(),2,12); //update the x coordinate
+       LCD.WriteRC(RPS.Y(),3,12); //update the y coordinate
+     }
+     float BeforeCarJackX = RPS.X();
+     float BeforeCarJackY = RPS.Y();
+     SD.Printf("%f %f\n", BeforeCarJackX, BeforeCarJackY);
+
+     Sleep(1500);
+
+
+     while (!LCD.Touch(&e, &f))
+     {
+       LCD.WriteRC("Wrench                ", 0, 0);
+       LCD.WriteRC(RPS.X(),2,12); //update the x coordinate
+       LCD.WriteRC(RPS.Y(),3,12); //update the y coordinate
+     }
+     float WrenchX = RPS.X();
+     float WrenchY = RPS.Y();
+     SD.Printf("%f %f\n", WrenchX, WrenchY);
+
+     Sleep(1500);
+
+
+     while (!LCD.Touch(&g, &h))
+     {
+       LCD.WriteRC("Before Garage              ", 0, 0);
+       LCD.WriteRC(RPS.X(),2,12); //update the x coordinate
+       LCD.WriteRC(RPS.Y(),3,12); //update the y coordinate
+     }
+     float BeforeGarageX = RPS.X();
+     float BeforeGarageY = RPS.Y();
+     SD.Printf("%f %f\n", BeforeGarageX, BeforeGarageY);
+
+     Sleep(1500);
+
+     while (!LCD.Touch(&l, &m))
+     {
+       LCD.WriteRC("Before Nitro              ", 0, 0);
+       LCD.WriteRC(RPS.X(),2,12); //update the x coordinate
+       LCD.WriteRC(RPS.Y(),3,12); //update the y coordinate
+     }
+     float BeforeNitroX = RPS.X();
+     float BeforeNitroY = RPS.Y();
+     SD.Printf("%f %f\n", BeforeNitroX, BeforeNitroY);
+
+
+     Sleep(1500);
+
+
+     while (!LCD.Touch(&n, &o))
+     {
+       LCD.WriteRC("Before Octane             ", 0, 0);
+       LCD.WriteRC(RPS.X(),2,12); //update the x coordinate
+       LCD.WriteRC(RPS.Y(),3,12); //update the y coordinate
+     }
+     float BeforeOctaneX = RPS.X();
+     float BeforeOctaneY = RPS.Y();
+     SD.Printf("%f %f\n", BeforeOctaneX, BeforeOctaneY);
+
+
+     Sleep(1500);
+
+     while (!LCD.Touch(&p, &q))
+     {
+       LCD.WriteRC("After Fuel Crank             ", 0, 0);
+       LCD.WriteRC(RPS.X(),2,12); //update the x coordinate
+       LCD.WriteRC(RPS.Y(),3,12); //update the y coordinate
+     }
+     float AfterFuelCrankX = RPS.X();
+     float AfterFuelCrankY = RPS.Y();
+     SD.Printf("%f %f\n", AfterFuelCrankX, AfterFuelCrankY);
+
+
+     Sleep(1500);
+
+
+     while (!LCD.Touch(&i, &k))
+     {}
+     
+
+
+    StartProgram(CdS_cell);
+    WhiteButton(WhiteButtonX, WhiteButtonY);
+    ChooseButtonComp();
+    MoveRPS(25, BeforeCarJackX, BeforeCarJackY);//Find position between control panel and Car Jack
+    CheckHeading(0);
+    MoveTime(45, 75, 2200); //Move to corner of course
+    MoveTime(180, 50, 1000);//Hit Car Jack
+    MoveTime(0, 50, 250);// Move back from car jack
+    CheckHeading(0);
+    MoveTime(270, 40, 1900); //Align with Wrench
+    MoveTime(180, 50, 250);
+    CheckHeading(0);
+    MoveRPSClose(20, WrenchX + 2, WrenchY);
+    CheckHeading(0);
+    arm_servo.SetDegree(178);
+    Sleep(1000);
+    MoveTime(0, 25, 1400); //Move to Wrench
+    Sleep(200);
+    //MoveTime(270, 50, 250);
+    Sleep(200);
+    arm_servo.SetDegree(90);
+    Sleep(1000);
+    MoveTime(180, 25, 1000);
+    MoveTime(290, 50, 1900);
+    ChangeOrientation(1000, -1.0);
+    CheckHeading(315);
+    MoveTime(45, 50, 600);
+    MoveTime(315, 100, 3200); //Up ramp
+    CheckHeading(315);
+    MoveTime(270, 50, 2600); //Towards Garage
+    CheckHeading(315);
+    MoveRPS(35, BeforeGarageX, BeforeGarageY);
+    MoveTime(0,25, 4200);
+    arm_servo.SetDegree(178);
+    Sleep(300);
+    MoveTime(180, 25, 100);
+    Sleep(300);
+    MoveTime(0, 25, 100);
+    Sleep(300);
+    MoveTime(180, 50, 1000);
+    arm_servo.SetDegree(90);
+    Sleep(1000);
+
+    CheckHeading(315);
+    ChangeOrientation(2000, -1.0);
+    CheckHeading(225);
+
+    if(RPS.FuelType() == 1)
+    {
+        MoveRPS(35, BeforeOctaneX-5.5, BeforeOctaneY-6.5);
+        MoveTime(90, 25,300);
+        arm_servo.SetDegree(100);
+        MoveTime(0, 25, 3300);
+        MoveTime(270, 25, 4000);
+        MoveTime(180, 50, 1700);
+        ChangeOrientation(1000, 1.0);
+        MoveTime(225, 50, 1979);
+    }
+
+    else if(RPS.FuelType() == 2)
+    {
+        arm_servo.SetDegree(100);
+        MoveRPS(25, BeforeGarageX, BeforeGarageY);
+        CheckHeading(225);
+        MoveTime(270, 40, 500);
+        MoveRPS(25, BeforeNitroX - 5.5, BeforeNitroY - 6.5);
+        CheckHeading(225);
+        MoveTime(0, 25, 3500);
+        MoveTime(90, 25, 4000);
+        MoveTime(180, 50, 1700);
+        ChangeOrientation(1000, 1.0);
+        MoveTime(225, 50, 3479);
+
+
+    }
+    MoveRPS(35, AfterFuelCrankX, AfterFuelCrankY);
+    CheckHeading(270);
+    arm_servo.SetDegree(30);
+    MoveTime(180, 60, 2000);
+    Sleep(500);
+    MoveTime(90, 65, 1600);
+    Sleep(500);
+    ChangeOrientation(2000, 1.0);
+    CheckHeading(0);
+    MoveTime(180, 50, 250);
+    MoveTouch(270, 75);
+
+
+    SD.CloseLog();
+
+
+
+
+   return 0;
