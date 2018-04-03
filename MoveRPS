@@ -1,4 +1,4 @@
-void MoveRPS(float power, float FinalX, float FinalY)
+void MoveRPS(int tolerance, float power, float FinalX, float FinalY)
 {
     float offset = 0;
 
@@ -46,7 +46,7 @@ void MoveRPS(float power, float FinalX, float FinalY)
     float distance = pow(pow(FinalX-StartX , 2) + pow(FinalY-StartY, 2), .5);
     if (distance < 10)
     {
-        MoveTimeFloat(degrees - RPS.Heading(), power, distance/20);
+        MoveTimeFloat(degrees - RPS.Heading(), power, distance/tolerance);
         LCD.WriteAt(distance, 1, 100);
     }
 
