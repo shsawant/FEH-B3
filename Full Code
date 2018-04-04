@@ -60,12 +60,18 @@ void ServoSetup()
 
 void MoveTime(float degrees, float power, int time)
 {
+    //Convert angle in degrees to radians
     float radians = degrees * (PI/180.0);
+
+    //Set motors to correct power to move in specified direction
     front.SetPercent(power*-cos(radians));
     right.SetPercent(power*-sin(radians));
     back.SetPercent(power*cos(radians));
     left.SetPercent(power*sin(radians));
+
     Sleep(time);
+
+    //Turn motors off after moving for specified time
     front.SetPercent(0);
     right.SetPercent(0);
     back.SetPercent(0);
@@ -99,22 +105,6 @@ void MoveDead(float degrees, float power)
     left.SetPercent(0);
 
 }
-
-void MoveSwitch(float degrees, float power, DigitalInputPin Switch)
-{
-    float radians = degrees * (PI/180.0);
-    front.SetPercent(power*-cos(radians));
-    right.SetPercent(power*-sin(radians));
-    back.SetPercent(power*cos(radians));
-    left.SetPercent(power*sin(radians));
-    while(Switch.Value()){};
-    front.SetPercent(0);
-    right.SetPercent(0);
-    back.SetPercent(0);
-    left.SetPercent(0);
-}
-
-
 
 void MoveRPS(float power, float FinalX, float FinalY)
 {
@@ -168,14 +158,7 @@ void MoveRPS(float power, float FinalX, float FinalY)
         LCD.WriteAt(distance, 1, 100);
     }
 
-
-
-
-
-
-
-
-    while((abs(RPS.X() - FinalX) > 1.1) || (abs(RPS.Y() - FinalY) > 1.1)){
+    while((abs(RPS.X() - FinalX) > 1.0) || (abs(RPS.Y() - FinalY) > 1.0)){
         MoveRPS(power, FinalX,FinalY);
 
     }
@@ -187,15 +170,17 @@ void MoveRPSClose(float power, float FinalX, float FinalY)
 {
     float offset = 0;
 
-    float StartX = RPS.X();
-    float StartY = RPS.Y();
+
 
     //find what quadrant angle is in
     LCD.Clear();
+    while((abs(RPS.X() - FinalX) > 0.5) || (abs(RPS.Y() - FinalY) > 0.5)){
+         float StartX = RPS.X();
+         float StartY = RPS.Y();
 
-    if (RPS.X() > 0)
+    if (StartX < 0 || StartY < 0)
     {
-        MoveTime(180, 20, 20);
+        MoveTime(180, 50, 30);
     }
     else if ((FinalX < StartX) && (FinalY > StartY))
     {
@@ -219,7 +204,6 @@ void MoveRPSClose(float power, float FinalX, float FinalY)
     }
 
 
-
     float radians = atan((FinalX - StartX)/(FinalY - StartY)) + offset;
     float degrees = radians*180/PI;
     LCD.WriteAt(degrees, 1, 50);
@@ -231,15 +215,6 @@ void MoveRPSClose(float power, float FinalX, float FinalY)
     float distance = pow(pow(FinalX-StartX , 2) + pow(FinalY-StartY, 2), .5);
     MoveTimeFloat(degrees - RPS.Heading(), power, distance/10);
     LCD.WriteAt(distance, 1, 100);
-
-
-
-
-
-
-
-    while((abs(RPS.X() - FinalX) > 0.5) || (abs(RPS.Y() - FinalY) > 0.5)){
-        MoveRPSClose(power, FinalX,FinalY);
 
     }
 
@@ -274,7 +249,7 @@ void CheckHeading(float degrees)
             LCD.WriteAt(RPS.Heading(),1,1);
             LCD.WriteAt(degrees, 1, 50);
 
-            Sleep(100);
+            Sleep(50);
         }
 
         else if ((RPS.Heading() > degrees) && ((RPS.Heading() - degrees) > 180))
@@ -282,21 +257,21 @@ void CheckHeading(float degrees)
             ChangeOrientation(20, 1.0);
             LCD.WriteAt(RPS.Heading(),1,1);
             LCD.WriteAt(degrees, 1, 50);
-            Sleep(100);
+            Sleep(50);
         }
         else if ((RPS.Heading() < degrees) && ((RPS.Heading() - degrees) < 180) )
         {
             ChangeOrientation(20, 1.0);
             LCD.WriteAt(RPS.Heading(),1,1);
             LCD.WriteAt(degrees, 1, 50);
-            Sleep(100);
+            Sleep(50);
         }
         else if ((RPS.Heading() < degrees) && (((RPS.Heading() - degrees) < 180)))
         {
             ChangeOrientation(20, -1.0);
             LCD.WriteAt(RPS.Heading(),1,1);
             LCD.WriteAt(degrees, 1, 50);
-            Sleep(100);
+            Sleep(50);
         }
 
     }
@@ -304,8 +279,6 @@ void CheckHeading(float degrees)
 
 void SetHeading(float degrees)
 {
-    while (abs(RPS.Heading() - degrees) > 1.0)
-    {
 
 
         LCD.Clear();
@@ -316,10 +289,12 @@ void SetHeading(float degrees)
 
 
 
+
+
         else if((RPS.Heading() > degrees) && ((RPS.Heading() - degrees) < 180))
         {
             float difference = abs(RPS.Heading() - degrees);
-            float turnTime = difference * 11;
+            float turnTime = difference * 22;
 
             ChangeOrientation(turnTime, -1.0);
             LCD.WriteAt(RPS.Heading(),1,1);
@@ -332,7 +307,7 @@ void SetHeading(float degrees)
         else if ((RPS.Heading() > degrees) && ((RPS.Heading() - degrees) > 180))
         {
             float difference = abs(RPS.Heading() - degrees);
-            float turnTime = ((360 -difference) * 11);
+            float turnTime = ((360 - difference) * 22);
 
 
             ChangeOrientation(turnTime, 1.0);
@@ -345,7 +320,7 @@ void SetHeading(float degrees)
         else if ((RPS.Heading() < degrees) && ((RPS.Heading() - degrees) < 180) )
         {
             float difference = abs(RPS.Heading() - degrees);
-            float turnTime = (difference * 11);
+            float turnTime = difference * 22;
 
             ChangeOrientation(turnTime, -1.0);
             LCD.WriteAt(RPS.Heading(),1,1);
@@ -356,7 +331,7 @@ void SetHeading(float degrees)
         else if ((RPS.Heading() < degrees) && (((RPS.Heading() - degrees) > 180)))
         {
             float difference = abs(RPS.Heading() - degrees);
-            float turnTime = ((360 - difference) * 11);
+            float turnTime = ((360 - difference) * 22);
 
             ChangeOrientation(turnTime, 1.0);
             LCD.WriteAt(RPS.Heading(),1,1);
@@ -364,27 +339,19 @@ void SetHeading(float degrees)
             LCD.WriteAt(turnTime, 1, 100);
 
         }
-        Sleep(20);
-    }
-}
-void RPSY(float Y)
-{
-    while(abs(RPS.Y()-Y) > 0.1)
-    {
-    if(RPS.Y() > Y)
-    {
-        MoveTime(90, 25, (RPS.Y()-Y)/10);
-    }
-    else if(RPS.Y() < Y)
-    {
-        MoveTime(270, 25, (RPS.Y()-Y)/10);
-    }
-    }
+
+        Sleep(50);
+
+        while (abs(RPS.Heading() - degrees) > 1.0)
+        {
+            CheckHeading(degrees);
+        }
 }
 
 void StartProgram(AnalogInputPin CdS)
 {
-    while(CdS.Value() > 2){}
+    float StartTime = TimeNow();
+    while(CdS.Value() > 2 && (abs(TimeNow() - StartTime) < 30)){}
 }
 
 void SpinTouch(float power)
@@ -407,85 +374,6 @@ void SpinTouch(float power)
     LCD.WriteAt(finish, 1, 1);
 }
 
-void MoveTouch(float degrees, float power)
-{
-    float x,y;
-    float radians = degrees * (PI/180.0);
-    LCD.Clear();
-    float start = TimeNow();
-    while (!LCD.Touch(&x,&y))
-    {
-        front.SetPercent(power*-cos(radians));
-        right.SetPercent(power*-sin(radians));
-        back.SetPercent(power*cos(radians));
-        left.SetPercent(power*sin(radians));
-    }
-    float finish = TimeNow() - start;
-    front.SetPercent(0);
-    right.SetPercent(0);
-    back.SetPercent(0);
-    left.SetPercent(0);
-    LCD.WriteAt(finish, 1, 1);
-    SD.Printf("%f", finish);
-
-}
-
-
-
-
-
-void PerformanceTest1Final(){
-    StartProgram(CdS_cell);
-        MoveSwitch(60,50, FrontSwitch);
-        MoveTime(180, IDEALPOWER, 500);
-        MoveTime(270, IDEALPOWER, 2500);
-        MoveSwitch(180, 80, LeftSwitch);
-        MoveSwitch(90,50, FrontSwitch);
-        MoveTime(270, IDEALPOWER, 800);
-        ChangeOrientation(1022, 1.0);
-        MoveTime(225, 75, 5000);
-}
-
-void CdS_Test()
-{
-    float a,b;
-while (!LCD.Touch(&a,&b))
-{
-    LCD.WriteLine(CdS_cell.Value());
-    Sleep(100);
-}
-}
-void ChooseButton()
-{
-    LCD.Clear();
-    Sleep(100);
-    if(CdS_cell.Value() < 1.5)
-    {
-        LCD.WriteAt("RED",100,1);
-
-        MoveTime(0,50, 324);
-        MoveTime(90,100,250);
-        Sleep(100);
-        MoveTime(270,50,250);
-        MoveTime(0,50, 2721);
-
-
-    }
-    else
-    {
-        LCD.WriteAt("BLUE",100,1);
-
-        MoveTime(180,50,700);
-        MoveTime(90,100,250);
-        Sleep(100);
-        MoveTime(270,50,250);
-        MoveTime(0,50, 3655);
-
-
-
-    }
-
-}
 void ChooseButtonComp()
 {
     MoveTime(270, 25, 250);
@@ -501,9 +389,7 @@ void ChooseButtonComp()
         Sleep(100);
         MoveTime(270, 40, 500);
         CheckHeading(0);
-        MoveTime(0, 75, 802);
-
-
+        MoveTime(0, 75, 700);
     }
     else
     {
@@ -514,109 +400,19 @@ void ChooseButtonComp()
         Sleep(100);
         MoveTime(270, 40, 500);
         CheckHeading(0);
-        MoveTime(0, 75, 1389);
-
-
-
-
-
-
+        MoveTime(0, 75, 1250);
     }
 
 }
 
 void WhiteButton(float XPosition, float YPosition)
 {
-    MoveTime(138, 75, 1400);
+    MoveTime(138, 101, 965);
     MoveRPS(25,XPosition, YPosition);
     CheckHeading(0);
     MoveTime(90,25,1400);
     MoveDead(90, 25);
 }
-
-void DriveUpHill(float degrees, float power)
-{
-
-    float radians = degrees * (PI/180.0);
-    front.SetPercent(power*-cos(radians));
-    right.SetPercent(power*-sin(radians));
-    back.SetPercent(power*cos(radians));
-    left.SetPercent(power*sin(radians));
-    while(Accel.Z() != 0)
-    {
-        LCD.WriteLine(Accel.Z());
-    }
-    front.SetPercent(0);
-    right.SetPercent(0);
-    back.SetPercent(0);
-    left.SetPercent(0);
-
-
-}
-
-void PerformanceTest4Final()
-{
-    RPS.InitializeTouchMenu();
-
-    SD.OpenLog();
-    StartProgram(CdS_cell);
-    ServoSetup();
-    WhiteButton(26.3, 21.7);
-    MoveTime(270, 50, 500);
-    MoveTime(180,50, 500);
-    ChangeOrientation(1000, -1.0);
-    CheckHeading(315);
-    MoveTime(315, 75, 3800);
-    ChangeOrientation(1000, 1.0);
-    CheckHeading(0);
-    MoveRPS(25, 28.5, 46.4);
-    ChangeOrientation(2500, -1.0);
-    CheckHeading(270);
-
-
-
-    if(RPS.FuelType() == 1)
-    {
-        LCD.WriteAt("Octane", 1,1);
-
-        MoveTime(45, 50, 3500);
-        ChangeOrientation(1000, -1.0);
-        CheckHeading(225);
-        MoveTime(90, 25, 100);
-        arm_servo.SetDegree(90);
-        MoveTime(0, 25, 3500);
-        Sleep(100);
-        MoveTime(270, 25, 2800);
-
-
-
-
-    }
-    else if(RPS.FuelType() == 2)
-    {
-        LCD.WriteAt("Nitro", 1,1);
-
-        MoveTime(45, 50, 1700);
-        ChangeOrientation(1000, -1.0);
-        CheckHeading(225);
-        arm_servo.SetDegree(90);
-        MoveTime(0, 25, 3600);
-        Sleep(100);
-        MoveTime(90, 25, 3200);
-
-
-    }
-    CheckHeading(225);
-    MoveTime(180, 25, 4000);
-    SetHeading(180);
-    arm_servo.SetDegree(15);
-    MoveTouch(315, 50);
-
-    SD.CloseLog();
-
-}
-
-
 
 int main(void)
 {
@@ -723,40 +519,47 @@ int main(void)
      while (!LCD.Touch(&i, &k))
      {}
 
+     if (WhiteButtonX < 0 ||  BeforeCarJackX < 0 || WrenchX < 0 || BeforeGarageX < 0 || BeforeNitroX < 0 ||BeforeOctaneX < 0 || AfterFuelCrankX < 0)
+    {
+         WhiteButton(WhiteButtonX, WhiteButtonY);
+    }
+
+
 
     StartProgram(CdS_cell);
     WhiteButton(WhiteButtonX, WhiteButtonY);
+
     ChooseButtonComp();
     MoveRPS(25, BeforeCarJackX, BeforeCarJackY);//Find position between control panel and Car Jack
     CheckHeading(0);
-    MoveTime(45, 75, 2200); //Move to corner of course
-    MoveTime(180, 50, 1000);//Hit Car Jack
+    MoveTime(50, 106, 1557);
+    MoveTime(180, 50, 1000);
     MoveTime(0, 50, 250);// Move back from car jack
     CheckHeading(0);
-    MoveTime(270, 40, 1900); //Align with Wrench
+    MoveTime(270, 75, 1013); //Align with Wrench
     MoveTime(180, 50, 250);
     CheckHeading(0);
-    MoveRPS(20, WrenchX + 2, WrenchY);
+    MoveRPSClose(20, WrenchX + 1.8, WrenchY);
     CheckHeading(0);
     arm_servo.SetDegree(178);
     Sleep(1000);
     MoveTime(0, 25, 1400); //Move to Wrench
     Sleep(200);
-    MoveTime(270, 50, 250);
-    Sleep(200);
     arm_servo.SetDegree(90);
-    Sleep(500);
+    Sleep(1000);
     MoveTime(180, 25, 1000);
-    MoveTime(290, 50, 1900);
+
+    MoveTime(290, 80, 1188);
     ChangeOrientation(1000, -1.0);
     CheckHeading(315);
     MoveTime(45, 50, 600);
-    MoveTime(315, 100, 3200); //Up ramp
+    MoveTime(315, 141, 2000);
+
     CheckHeading(315);
-    MoveTime(270, 50, 2600); //Towards Garage
+    MoveTime(270, 75, 1733); //Towards Garage
     CheckHeading(315);
     MoveRPS(35, BeforeGarageX, BeforeGarageY);
-    MoveTime(0,25, 4200);
+    MoveTime(0,75, 1400);
     arm_servo.SetDegree(178);
     Sleep(300);
     MoveTime(180, 25, 100);
@@ -771,42 +574,49 @@ int main(void)
     ChangeOrientation(2000, -1.0);
     CheckHeading(225);
 
-    if(RPS.FuelType() == 1)
-    {
-        MoveRPS(35, BeforeOctaneX-5.5, BeforeOctaneY-6.5);
-        MoveTime(90, 25,300);
-        arm_servo.SetDegree(100);
-        MoveTime(0, 25, 3300);
-        MoveTime(270, 25, 4000);
-        MoveTime(180, 50, 1700);
-        ChangeOrientation(1000, 1.0);
-        MoveTime(225, 50, 1979);
-    }
+        if(RPS.FuelType() == 1)
+        {
+            MoveRPS(35, BeforeOctaneX - 5.5, BeforeOctaneY - 6);
+            MoveTime(90, 25,300);
+            arm_servo.SetDegree(100);
+            MoveTime(0, 25, 3300);
+            MoveTime(270, 25, 4000);
+            MoveTime(180, 50, 1700);
+            ChangeOrientation(1000, -1.0);
+            MoveTime(315, 106, 933);
+        }
 
-    else if(RPS.FuelType() == 2)
-    {
-        arm_servo.SetDegree(100);
-        MoveRPS(25, BeforeGarageX, BeforeGarageY);
-        CheckHeading(225);
-        MoveTime(270, 40, 500);
-        MoveRPS(25, BeforeNitroX - 5.5, BeforeNitroY - 6.5);
-        CheckHeading(225);
-        MoveTime(0, 25, 3500);
-        MoveTime(90, 25, 4000);
-        MoveTime(180, 50, 1700);
-        ChangeOrientation(1000, 1.0);
-        MoveTime(225, 50, 3479);
+        else if(RPS.FuelType() == 2)
+        {
+            arm_servo.SetDegree(100);
+            MoveRPS(25, BeforeGarageX, BeforeGarageY);
+            CheckHeading(225);
+            MoveTime(270, 40, 700);
+            MoveRPS(25, BeforeNitroX - 5.5, BeforeNitroY - 6.5);
+            CheckHeading(225);
+            MoveTime(0, 25, 3500);
+            MoveTime(90, 25, 4000);
+            MoveTime(180, 50, 1700);
+            ChangeOrientation(1000, -1.0);
+            MoveTime(315, 106, 1641);
 
 
-    }
-    MoveRPS(35, AfterFuelCrankX, AfterFuelCrankY);
-    arm_servo.SetDegree(10);
-    MoveTime(180, 60, 2000);
-    Sleep(500);
-    MoveTime(90, 65, 1600);
-    Sleep(500);
-    ChangeOrientation(2000, 1.0);
-    MoveTouch(270, 75);
+        }
+
+        MoveRPS(35, AfterFuelCrankX, AfterFuelCrankY);
+        CheckHeading(180);
+
+        arm_servo.SetDegree(10);
+        MoveTime(270, 75, 1600);
+        CheckHeading(180);
+
+        MoveTime(180, 83, 1253);
+
+        MoveTouch(90, 75);
+
+
+
+
 
 
     SD.CloseLog();
