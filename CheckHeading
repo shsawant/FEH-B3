@@ -45,7 +45,7 @@ void CheckHeading(float degrees)
             difference = 360 - abs(RPS.Heading() - degrees);
 
         }
-        
+        //Sleeps for less time when difference is greater
         Sleep(100/difference);
     }
 }
