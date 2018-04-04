@@ -1,7 +1,5 @@
 void SetHeading(float degrees)
 {
-    while (abs(RPS.Heading() - degrees) > 1.0)
-    {
 
 
         LCD.Clear();
@@ -9,13 +7,15 @@ void SetHeading(float degrees)
         {
             MoveTime(180, 25, 20);
         }
+        
+        
 
 
 
         else if((RPS.Heading() > degrees) && ((RPS.Heading() - degrees) < 180))
         {
             float difference = abs(RPS.Heading() - degrees);
-            float turnTime = difference * 11;
+            float turnTime = difference * 22;
 
             ChangeOrientation(turnTime, -1.0);
             LCD.WriteAt(RPS.Heading(),1,1);
@@ -28,7 +28,7 @@ void SetHeading(float degrees)
         else if ((RPS.Heading() > degrees) && ((RPS.Heading() - degrees) > 180))
         {
             float difference = abs(RPS.Heading() - degrees);
-            float turnTime = ((360 -difference) * 11);
+            float turnTime = ((360 - difference) * 22);
 
 
             ChangeOrientation(turnTime, 1.0);
@@ -41,7 +41,7 @@ void SetHeading(float degrees)
         else if ((RPS.Heading() < degrees) && ((RPS.Heading() - degrees) < 180) )
         {
             float difference = abs(RPS.Heading() - degrees);
-            float turnTime = (difference * 11);
+            float turnTime = difference * 22;
 
             ChangeOrientation(turnTime, -1.0);
             LCD.WriteAt(RPS.Heading(),1,1);
@@ -52,7 +52,7 @@ void SetHeading(float degrees)
         else if ((RPS.Heading() < degrees) && (((RPS.Heading() - degrees) > 180)))
         {
             float difference = abs(RPS.Heading() - degrees);
-            float turnTime = ((360 - difference) * 11);
+            float turnTime = ((360 - difference) * 22);
 
             ChangeOrientation(turnTime, 1.0);
             LCD.WriteAt(RPS.Heading(),1,1);
@@ -60,6 +60,11 @@ void SetHeading(float degrees)
             LCD.WriteAt(turnTime, 1, 100);
 
         }
-        Sleep(20);
-    }
+
+        Sleep(50);
+
+        while (abs(RPS.Heading() - degrees) > 1.0)
+        {
+            CheckHeading(degrees);
+        }
 }
