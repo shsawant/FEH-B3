@@ -2,6 +2,7 @@ void CheckHeading(float degrees)
 {
     while (abs(RPS.Heading() - degrees) > 1.0)
     {
+        float difference = 0;
         LCD.Clear();
         if (RPS.Heading() == -2.00)
         {
@@ -13,7 +14,7 @@ void CheckHeading(float degrees)
             LCD.WriteAt(RPS.Heading(),1,1);
             LCD.WriteAt(degrees, 1, 50);
             
-            float difference = abs(RPS.Heading() - degrees);
+            difference = abs(RPS.Heading() - degrees);
 
         }
 
@@ -23,7 +24,7 @@ void CheckHeading(float degrees)
             LCD.WriteAt(RPS.Heading(),1,1);
             LCD.WriteAt(degrees, 1, 50);
             
-            float difference = 360 - abs(RPS.Heading() - degrees);
+            difference = 360 - abs(RPS.Heading() - degrees);
 
         }
         else if ((RPS.Heading() < degrees) && ((RPS.Heading() - degrees) < 180) )
@@ -32,7 +33,7 @@ void CheckHeading(float degrees)
             LCD.WriteAt(RPS.Heading(),1,1);
             LCD.WriteAt(degrees, 1, 50);
             
-            float difference = abs(RPS.Heading() - degrees);
+            difference = abs(RPS.Heading() - degrees);
 
         }
         else if ((RPS.Heading() < degrees) && (((RPS.Heading() - degrees) < 180)))
@@ -41,9 +42,10 @@ void CheckHeading(float degrees)
             LCD.WriteAt(RPS.Heading(),1,1);
             LCD.WriteAt(degrees, 1, 50);
             
-            float difference = 360 - abs(RPS.Heading() - degrees);
+            difference = 360 - abs(RPS.Heading() - degrees);
 
         }
-
+        
+        Sleep(100/difference);
     }
 }
