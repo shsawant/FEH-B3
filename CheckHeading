@@ -13,7 +13,7 @@ void CheckHeading(float degrees)
             LCD.WriteAt(RPS.Heading(),1,1);
             LCD.WriteAt(degrees, 1, 50);
 
-            Sleep(100);
+            Sleep(50);
         }
 
         else if ((RPS.Heading() > degrees) && ((RPS.Heading() - degrees) > 180))
@@ -21,21 +21,21 @@ void CheckHeading(float degrees)
             ChangeOrientation(20, 1.0);
             LCD.WriteAt(RPS.Heading(),1,1);
             LCD.WriteAt(degrees, 1, 50);
-            Sleep(100);
+            Sleep(50);
         }
         else if ((RPS.Heading() < degrees) && ((RPS.Heading() - degrees) < 180) )
         {
             ChangeOrientation(20, 1.0);
             LCD.WriteAt(RPS.Heading(),1,1);
             LCD.WriteAt(degrees, 1, 50);
-            Sleep(100);
+            Sleep(50);
         }
         else if ((RPS.Heading() < degrees) && (((RPS.Heading() - degrees) < 180)))
         {
             ChangeOrientation(20, -1.0);
             LCD.WriteAt(RPS.Heading(),1,1);
             LCD.WriteAt(degrees, 1, 50);
-            Sleep(100);
+            Sleep(50);
         }
 
     }
