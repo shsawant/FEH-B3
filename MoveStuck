@@ -1,0 +1,18 @@
+void MoveStuck(float direction, float power, float BeforeCarJackX)
+{
+    float startPosition = RPS.Y();
+
+    MoveTime(direction, power, 2000);
+
+    if(abs(RPS.Y() - startPosition) < 5 && RPS.X() < BeforeCarJackX)
+    {
+        MoveTime(0, 75, 250);
+    }
+    else if(abs(RPS.Y() - startPosition) < 5 && RPS.X() > BeforeCarJackX)
+    {
+        MoveTime(180, 75, 250);
+    }
+
+    MoveTouch(direction, power);
+
+}
