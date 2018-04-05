@@ -1,38 +1,30 @@
-void ChooseButton()
+void ChooseButtonComp()
 {
-    MoveTime(270, 25, 250);
-    CheckHeading(0);
+    MoveTime(270, 25, 350);
+    CheckHeadingWhiteButton(0);
     LCD.Clear();
     Sleep(50);
     if(CdS_cell.Value() < 1.5)
     {
         LCD.WriteAt("RED",100,1);
 
-        MoveTime(0, 25,1000);
-        MoveTime(90,40,500);
+        MoveTime(0, 75,333);
+        MoveTime(90,40,600);
         Sleep(100);
         MoveTime(270, 40, 500);
         CheckHeading(0);
-        MoveTime(0, 75, 802);
-
-
+        MoveTime(0, 75, 700);
     }
     else
     {
         LCD.WriteAt("BLUE",100,1);
 
-        MoveTime(180,25,1000);
-        MoveTime(90,40,500);
+        MoveTime(180,75,333);
+        MoveTime(90,40,600);
         Sleep(100);
         MoveTime(270, 40, 500);
         CheckHeading(0);
-        MoveTime(0, 75, 1389);
-
-
-
-
-
-
+        MoveTime(0, 75, 1250);
     }
 
 }
