@@ -1,8 +1,8 @@
 void WhiteButton(float XPosition, float YPosition)
 {
-    MoveTime(138, IDEALPOWER, 2000);
-    MoveRPS(25,XPosition, YPosition);
-    CheckHeading(0);
+    MoveTime(138, 101, 965);
+    MoveRPS(50,XPosition, YPosition);
+    CheckHeadingWhiteButton(0);
     MoveTime(90,25,1400);
-    MoveDead(90, 25);
+    MoveDead(90, 40);
 }
