@@ -370,25 +370,53 @@ void SpinTouch(float power)
 }
 
 
-void MoveStuck(float direction, float power, float BeforeCarJackX)
+void MoveStuck(float degrees, float power, float BeforeCarJackX)
 {
-    float startPosition = RPS.Y();
-    int isStuck = 1;
 
-    MoveTime(direction, power, 2000);
-    while(isStuck){
-    if(abs(RPS.Y() - startPosition) < 5 && RPS.X() < BeforeCarJackX)
+
+    //Convert angle in degrees to radians
+    float radians = degrees * (PI/180.0);
+
+    //Set motors to correct power to move in specified direction
+    front.SetPercent(power*-cos(radians));
+    right.SetPercent(power*-sin(radians));
+    back.SetPercent(power*cos(radians));
+    left.SetPercent(power*sin(radians));
+
+    int stuck = 0;
+
+    while(!stuck)
     {
-        MoveTime(0, 75, 400);
-    }
-    else if(abs(RPS.Y() - startPosition) < 5 && RPS.X() > BeforeCarJackX)
-    {
-        MoveTime(180, 75, 400);
-    }
-    isStuck = 0;
+        float startPosition = RPS.Y();
+        Sleep(780);
+        stuck = abs(RPS.Y() - startPosition) < 1;
     }
 
-    MoveTouch(direction, power);
+
+    if(stuck && RPS.X() < BeforeCarJackX)
+    {
+        //Turn motors off after moving
+        front.SetPercent(0);
+        right.SetPercent(0);
+        back.SetPercent(0);
+        left.SetPercent(0);
+        MoveTime(0, 75, 300);
+    }
+    else if(stuck && RPS.X() > BeforeCarJackX)
+    {
+        //Turn motors off after moving
+        front.SetPercent(0);
+        right.SetPercent(0);
+        back.SetPercent(0);
+        left.SetPercent(0);
+        MoveTime(180, 75, 300);
+    }
+
+    front.SetPercent(power*-cos(radians));
+    right.SetPercent(power*-sin(radians));
+    back.SetPercent(power*cos(radians));
+    left.SetPercent(power*sin(radians));
+
 }
 
 void ChooseButtonComp()
@@ -425,7 +453,7 @@ void ChooseButtonComp()
 void WhiteButton(float XPosition, float YPosition)
 {
     MoveTime(138, 101, 965);
-    MoveRPS(50,XPosition, YPosition);
+    MoveRPS(25,XPosition, YPosition);
     CheckHeadingWhiteButton(0);
     MoveTime(90,25,1400);
     MoveDead(90, 40);
@@ -558,7 +586,7 @@ int main(void)
     MoveTime(270, 75, 1013); //Align with Wrench
     MoveTime(180, 50, 150);
     CheckHeading(0);
-    MoveRPSClose(30, WrenchX + 1.8, WrenchY);
+    MoveRPSClose(30, WrenchX + 2.0, WrenchY);
     CheckHeading(0);
     arm_servo.SetDegree(178);
     Sleep(1000);
@@ -575,15 +603,16 @@ int main(void)
     CheckHeading(315);
     MoveTime(270, 75, 1733); //Towards Garage
     CheckHeading(315);
-    MoveRPS(40, BeforeGarageX, BeforeGarageY);
+    MoveRPS(35, BeforeGarageX, BeforeGarageY);
     CheckHeading(315);
+    arm_servo.SetDegree(165);
     MoveTime(0,75, 1400);
+    //Sleep(300);
+    //MoveTime(180, 25, 100);
+    //Sleep(300);
+    //MoveTime(0, 25, 100);
+    Sleep(300);
     arm_servo.SetDegree(178);
-    Sleep(300);
-    MoveTime(180, 25, 100);
-    Sleep(300);
-    MoveTime(0, 25, 100);
-    Sleep(300);
     MoveTime(180, 50, 1000);
     arm_servo.SetDegree(90);
     Sleep(1000);
@@ -594,12 +623,14 @@ int main(void)
 
         if(RPS.FuelType() == 1)
         {
-            MoveRPS(35, BeforeOctaneX - 6.5, BeforeOctaneY - 6.5);
+            MoveRPS(35, BeforeOctaneX - 6.5, BeforeOctaneY - 6.25);
+            CheckHeadingWhiteButton(225);
             MoveTime(90, 25,300);
             arm_servo.SetDegree(100);
             MoveTime(0, 25, 3300);
             MoveTime(270, 25, 4000);
             MoveTime(180, 50, 1800);
+            arm_servo.SetDegree(10);
             ChangeOrientation(1000, -1.0);
             MoveTime(315, 106, 1000);
         }
@@ -608,13 +639,14 @@ int main(void)
         {
             arm_servo.SetDegree(100);
             //MoveRPS(25, BeforeGarageX, BeforeGarageY);
-            CheckHeading(225);
+            CheckHeadingWhiteButton(225);
             MoveTime(270, 40, 700);
-            MoveRPS(25, BeforeNitroX - 5.5, BeforeNitroY - 6.5);
+            MoveRPS(25, BeforeNitroX - 5.75, BeforeNitroY - 6.75);
             CheckHeading(225);
             MoveTime(0, 25, 3500);
             MoveTime(90, 25, 4000);
             MoveTime(180, 50, 1700);
+            arm_servo.SetDegree(10);
             ChangeOrientation(1000, -1.0);
             MoveTime(315, 106, 1641);
 
@@ -624,7 +656,6 @@ int main(void)
         MoveRPS(75, AfterFuelCrankX, AfterFuelCrankY);
         CheckHeading(180);
 
-        arm_servo.SetDegree(10);
         MoveTime(270, 75, 1600);
         CheckHeading(180);
 
