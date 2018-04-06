@@ -322,7 +322,26 @@ void CheckHeading(float degrees)
     }
 }
 
-
+void MoveTouch(float degrees, float power)
+{
+    float x,y;
+    float radians = degrees * (PI/180.0);
+    LCD.Clear();
+    float start = TimeNow();
+    while (!LCD.Touch(&x,&y))
+    {
+        front.SetPercent(power*cos(radians));
+        right.SetPercent(power*-sin(radians));
+        back.SetPercent(.97*power*-cos(radians));
+        left.SetPercent(power*sin(radians));
+    }
+    float finish = TimeNow() - start;
+    front.SetPercent(0);
+    right.SetPercent(0);
+    back.SetPercent(0);
+    left.SetPercent(0);
+    LCD.WriteAt(finish, 1, 1);
+}
 
 void StartProgram(AnalogInputPin CdS)
 {
@@ -348,6 +367,28 @@ void SpinTouch(float power)
     back.SetPercent(0);
     left.SetPercent(0);
     LCD.WriteAt(finish, 1, 1);
+}
+
+
+void MoveStuck(float direction, float power, float BeforeCarJackX)
+{
+    float startPosition = RPS.Y();
+    int isStuck = 1;
+
+    MoveTime(direction, power, 2000);
+    while(isStuck){
+    if(abs(RPS.Y() - startPosition) < 5 && RPS.X() < BeforeCarJackX)
+    {
+        MoveTime(0, 75, 400);
+    }
+    else if(abs(RPS.Y() - startPosition) < 5 && RPS.X() > BeforeCarJackX)
+    {
+        MoveTime(180, 75, 400);
+    }
+    isStuck = 0;
+    }
+
+    MoveTouch(direction, power);
 }
 
 void ChooseButtonComp()
@@ -589,7 +630,7 @@ int main(void)
 
         MoveTime(180, 83, 1200);
 
-        MoveTime(90, 75, 2000);
+        MoveStuck(90, 75, BeforeCarJackX);
 
 
 
