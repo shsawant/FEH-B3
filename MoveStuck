@@ -1,18 +1,48 @@
-void MoveStuck(float direction, float power, float BeforeCarJackX)
+void MoveStuck(float degrees, float power, float BeforeCarJackX)
 {
-    float startPosition = RPS.Y();
 
-    MoveTime(direction, power, 2000);
 
-    if(abs(RPS.Y() - startPosition) < 5 && RPS.X() < BeforeCarJackX)
+    //Convert angle in degrees to radians
+    float radians = degrees * (PI/180.0);
+
+    //Set motors to correct power to move in specified direction
+    front.SetPercent(power*-cos(radians));
+    right.SetPercent(power*-sin(radians));
+    back.SetPercent(power*cos(radians));
+    left.SetPercent(power*sin(radians));
+
+    int stuck = 0;
+
+    while(!stuck)
     {
-        MoveTime(0, 75, 250);
-    }
-    else if(abs(RPS.Y() - startPosition) < 5 && RPS.X() > BeforeCarJackX)
-    {
-        MoveTime(180, 75, 250);
+        float startPosition = RPS.Y();
+        Sleep(500);
+        stuck = abs(RPS.Y() - startPosition) < 1;
     }
 
-    MoveTouch(direction, power);
+
+    if(stuck && RPS.X() < BeforeCarJackX)
+    {
+        //Turn motors off after moving
+        front.SetPercent(0);
+        right.SetPercent(0);
+        back.SetPercent(0);
+        left.SetPercent(0);
+        MoveTime(0, 75, 300);
+    }
+    else if(stuck && RPS.X() > BeforeCarJackX)
+    {
+        //Turn motors off after moving
+        front.SetPercent(0);
+        right.SetPercent(0);
+        back.SetPercent(0);
+        left.SetPercent(0);
+        MoveTime(180, 75, 300);
+    }
+
+    front.SetPercent(power*-cos(radians));
+    right.SetPercent(power*-sin(radians));
+    back.SetPercent(power*cos(radians));
+    left.SetPercent(power*sin(radians));
 
 }
