@@ -391,13 +391,13 @@ void MoveStuck(float direction, float power, float BeforeCarJackX)
     MoveTouch(direction, power);
 }
 
-void ChooseButtonComp()
+void ChooseButtonComp(int buttonColor)
 {
     MoveTime(270, 25, 350);
     CheckHeadingWhiteButton(0);
     LCD.Clear();
     Sleep(50);
-    if(CdS_cell.Value() < 1.5)
+    if(buttonColor == 1)
     {
         LCD.WriteAt("RED",100,1);
 
@@ -422,10 +422,16 @@ void ChooseButtonComp()
 
 }
 
-void WhiteButton(float XPosition, float YPosition)
+int WhiteButton(float XPosition, float YPosition, AnalogInputPin CdS_cell)
 {
+    int buttonColor = 0; //blue
     MoveTime(138, 101, 965);
     MoveRPS(50,XPosition, YPosition);
+    
+    if (CdS_cell.Value() < 1.5)
+    {
+        buttonColor = 1; //red
+    }
     CheckHeadingWhiteButton(0);
     MoveTime(90,25,1400);
     MoveDead(90, 40);
