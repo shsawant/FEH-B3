@@ -1,4 +1,4 @@
-void RPSTest()
+void RPS_Test()
 {
 
     LCD.Clear();
