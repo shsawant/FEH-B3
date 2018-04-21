@@ -17,8 +17,6 @@ void PerformanceTest4Final()
     ChangeOrientation(2500, -1.0);
     CheckHeading(270);
 
-
-
     if(RPS.FuelType() == 1)
     {
         LCD.WriteAt("Octane", 1,1);
@@ -31,10 +29,7 @@ void PerformanceTest4Final()
         MoveTime(0, 25, 3500);
         Sleep(100);
         MoveTime(270, 25, 2800);
-
-
-
-
+        
     }
     else if(RPS.FuelType() == 2)
     {
@@ -48,7 +43,6 @@ void PerformanceTest4Final()
         Sleep(100);
         MoveTime(90, 25, 3200);
 
-
     }
     CheckHeading(225);
     MoveTime(180, 25, 4000);
@@ -57,5 +51,4 @@ void PerformanceTest4Final()
     MoveTouch(315, 50);
 
     SD.CloseLog();
-
 }
