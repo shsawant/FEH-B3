@@ -33,15 +33,11 @@ void MoveRPS(int tolerance, float power, float FinalX, float FinalY)
         LCD.WriteAt("Quadrant 4",1,1);
     }
 
-
-
     float radians = atan((FinalX - StartX)/(FinalY - StartY)) + offset;
     float degrees = radians*180/PI;
     LCD.WriteAt(degrees, 1, 50);
 
-
     Sleep(100);
-
 
     float distance = pow(pow(FinalX-StartX , 2) + pow(FinalY-StartY, 2), .5);
     if (distance < 10)
@@ -50,16 +46,8 @@ void MoveRPS(int tolerance, float power, float FinalX, float FinalY)
         LCD.WriteAt(distance, 1, 100);
     }
 
-
-
-
-
-
-
-
     while((abs(RPS.X() - FinalX) > 1) || (abs(RPS.Y() - FinalY) > 1)){
         MoveRPS(power, FinalX,FinalY);
-
     }
 
 
