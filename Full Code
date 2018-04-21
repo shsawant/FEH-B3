@@ -624,10 +624,7 @@ int main(void)
             MoveTime(180, 50, 1700);
             ChangeOrientation(1000, -1.0);
             MoveTime(315, 106, 1641);
-
-
         }
-
         MoveRPS(75, AfterFuelCrankX, AfterFuelCrankY);
         CheckHeading(180);
 
@@ -639,15 +636,7 @@ int main(void)
 
         MoveStuck(90, 75, BeforeCarJackX);
 
-
-
-
-
-
     SD.CloseLog();
-
-
-
-
+    
    return 0;
 }
