@@ -15,9 +15,6 @@ FEHMotor right(FEHMotor::Motor1, 7.2);
 FEHMotor back(FEHMotor::Motor2, 7.2);
 FEHMotor left(FEHMotor::Motor3, 7.2);
 
-DigitalInputPin FrontSwitch(FEHIO::P1_7);
-DigitalInputPin LeftSwitch(FEHIO::P2_0);
-
 AnalogInputPin CdS_cell(FEHIO::P0_0);
 
 FEHServo arm_servo(FEHServo::Servo0);
