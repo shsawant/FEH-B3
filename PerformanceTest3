@@ -9,7 +9,6 @@ void PerformanceTest3()
     MoveTime(0, 50, 2367);
     CheckHeading(0);
     MoveTime(90,25,2000);
-    //RPSY(16.099);
     arm_servo.SetDegree(178);
     CheckHeading(0);
     MoveTime(0, 25, 1800);
@@ -31,5 +30,4 @@ void PerformanceTest3()
     arm_servo.SetDegree(90);
     MoveTime(180, 25, 2000);
     MoveTime(270,50,3000);
-
 }
