@@ -544,7 +544,8 @@ int main(void)
          LCD.WriteRC("Click Screen when told to press final button             ", 0, 0);
      }
 
-     if (WhiteButtonX < 0 ||  BeforeCarJackX < 0 || WrenchX < 0 || BeforeGarageX < 0 || BeforeNitroX < 0 ||BeforeOctaneX < 0 || AfterFuelCrankX < 0)
+     if (WhiteButtonX < 0 ||  BeforeCarJackX < 0 || WrenchX < 0 || BeforeGarageX < 0 || BeforeNitroX < 0 
+     ||BeforeOctaneX < 0 || AfterFuelCrankX < 0)
     {
          WhiteButton(WhiteButtonX, WhiteButtonY);
     }
